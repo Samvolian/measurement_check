@@ -15,9 +15,16 @@
         input, button {
             margin: 10px 0;
             padding: 10px;
-            background-color: #FF5733;
-            color: white;
         }
+        button {
+            background-color: #008000; /* Change this to your desired color */
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+    }
+    button:hover {
+        background-color: #50C878; /* Darker shade for hover effect */
         .result {
             margin-top: 10px;
         }
@@ -44,7 +51,7 @@
     <p id="mode-indicator">Current Mode: CM</p>
 
     <!-- First Formula Form -->
-    <h2>Formula 1: Across Shoulder - Neck Width - (Shoulder Length x2)</h2>
+    <h2>Formula 1: Across Shoulder - (Neck Width + (Shoulder Length x2))</h2>
     <form id="measurement-form-1">
         <label for="across-shoulder">Across Shoulder:</label>
         <input type="text" id="across-shoulder" required><br>
@@ -61,7 +68,7 @@
     <div class="result" id="result-1"></div>
 
     <!-- Second Formula Form -->
-    <h2>Formula 2: ((Front HPS + Back HPS) / 2) - Side Seam - 1/2 Armhole</h2>
+    <h2>Formula 2: ((Front HPS + Back HPS) / 2) - (Side Seam + 1/2 Armhole)</h2>
     <form id="measurement-form-2">
         <label for="front-hps">Front HPS:</label>
         <input type="text" id="front-hps" required><br>
