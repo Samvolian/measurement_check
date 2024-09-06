@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Blocks Measurement Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 10px;
+            width: 200px;
+        }
+        .result {
+            margin-top: 20px;
+        }
+        .error {
+            color: red; /* Red color for error messages */
+        }
+        .mode-button {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Basic Blocks Measurement Checker</h1>
+
+    <!-- Mode Toggle Button -->
+    <button class="mode-button" id="toggle-mode">Switch to INCH (fractions)</button>
+    
+    <!-- Measurement Mode Indicator -->
+    <p id="mode-indicator">Current Mode: CM</p>
+
+    <!-- First Formula Form -->
+    <h2>Formula 1: Across Shoulder - Neck Width - (Shoulder Length x2)</h2>
+    <form id="measurement-form-1">
+        <label for="across-shoulder">Across Shoulder:</label>
+        <input type="text" id="across-shoulder" required><br>
+
+        <label for="shoulder-length">Shoulder Length:</label>
+        <input type="text" id="shoulder-length" required><br>
+
+        <label for="neck-width">Neck Width:</label>
+        <input type="text" id="neck-width" required><br>
+
+        <button type="submit">Check Measurements for Formula 1</button>
+    </form>
+
+    <div class="result" id="result-1"></div>
+
+    <!-- Second Formula Form -->
+    <h2>Formula 2: ((Front HPS + Back HPS) / 2) - Side Seam - 1/2 Armhole</h2>
+    <form id="measurement-form-2">
+        <label for="front-hps">Front HPS:</label>
+        <input type="text" id="front-hps" required><br>
+
+        <label for="back-hps">Back HPS:</label>
+        <input type="text" id="back-hps" required><br>
+
+        <label for="side-seam">Side Seam:</label>
+        <input type="text" id="side-seam" required><br>
+
+        <label for="armhole">1/2 Armhole:</label>
+        <input type="text" id="armhole" required><br>
+
+        <button type="submit">Check Measurements for Formula 2</button>
+    </form>
+
+    <div class="result" id="result-2"></div>
+
+    <script>
+        let mode = 'CM'; // Default mode
+
+        function fractionToDecimal(input) {
+            const fractionParts = input.trim().split(" ");
+            let decimalValue = 0;
+
+            if (fractionParts.length === 2) {
+                const wholeNumber = parseFloat(fractionParts[0]);
+                const fraction = fractionParts[1].split("/");
+
+                if (fraction.length === 2) {
+                    const numerator = parseFloat(fraction[0]);
+                    const denominator = parseFloat(fraction[1]);
+
+                    if (denominator !== 0) {
+                        decimalValue = wholeNumber + (numerator / denominator);
+                    } else {
+                        decimalValue = NaN; // Handle division by zero
+                    }
+                }
+            } else if (fractionParts.length === 1 && fractionParts[0].includes("/")) {
+                const fraction = fractionParts[0].split("/");
+
+                if (fraction.length === 2) {
+                    const numerator = parseFloat(fraction[0]);
+                    const denominator = parseFloat(fraction[1]);
+
+                    if (denominator !== 0) {
+                        decimalValue = numerator / denominator;
+                    } else {
+                        decimalValue = NaN; // Handle division by zero
+                    }
+                }
+            } else {
+                decimalValue = parseFloat(input);
+            }
+
+            return decimalValue;
+        }
+
+        function checkFormula1(acrossShoulderInput, shoulderLengthInput, neckWidthInput) {
+            const acrossShoulder = fractionToDecimal(acrossShoulderInput);
+            const shoulderLength = fractionToDecimal(shoulderLengthInput);
+            const neckWidth = fractionToDecimal(neckWidthInput);
+
+            if (isNaN(acrossShoulder) || isNaN(shoulderLength) || isNaN(neckWidth)) {
+                return { message: "Error: Invalid input. Please enter valid measurements.", isError: true };
+            }
+
+            const x = (acrossShoulder - neckWidth - (shoulderLength * 2)).toFixed(2);
+            const numX = parseFloat(x);
+
+            if (mode === 'CM') {
+                if (numX < 0.3) {
+                    return { message: `Error: The result is ${x} cm, the result should be between 0.3 and 6 cm. Please check your measurements.`, isError: true };
+                } else if (numX > 6) {
+                    return { message: `Error: The result is ${x} cm, the result should be between 0.3 and 6 cm. Please check your measurements.`, isError: true };
+                }
+            } else {
+                if (numX < 0.125) {
+                    return { message: `Error: The result is ${x} inches, the result should be between 0.125 (1/8) and 2.5 inches. Please check your measurements.`, isError: true };
+                } else if (numX > 2.5) {
+                    return { message: `Error: The result is ${x} inches, the result should be between 0.125 (1/8) and 2.5 inches. Please check your measurements.`, isError: true };
+                }
+            }
+            return { message: `Measurements seem valid. The result is ${x} ${mode.toLowerCase()}.`, isError: false };
+        }
+
+        function checkFormula2(frontHPSInput, backHPSInput, sideSeamInput, armholeInput) {
+            const frontHPS = fractionToDecimal(frontHPSInput);
+            const backHPS = fractionToDecimal(backHPSInput);
+            const sideSeam = fractionToDecimal(sideSeamInput);
+            const armhole = fractionToDecimal(armholeInput);
+
+            if (isNaN(frontHPS) || isNaN(backHPS) || isNaN(sideSeam) || isNaN(armhole)) {
+                return { message: "Error: Invalid input. Please enter valid measurements.", isError: true };
+            }
+
+            const y = (((frontHPS + backHPS) / 2) - sideSeam - armhole).toFixed(2);
+            const numY = parseFloat(y);
+
+            if (mode === 'CM') {
+                if (numY < 1.2) {
+                    return { message: `Error: The result is ${y} cm, the result should be between 1.2 cm and 12 cm. Please check your measurements.`, isError: true };
+                } else if (numY > 12) {
+                    return { message: `Error: The result is ${y} cm, the result should be between 1.2 cm and 12 cm. Please check your measurements.`, isError: true };
+                }
+            } else {
+                if (numY < 0.5) {
+                    return { message: `Error: The result is ${y} inches, the result should be between 0.5 and 5 inches. Please check your measurements.`, isError: true };
+                } else if (numY > 5) {
+                    return { message: `Error: The result is ${y} inches, the result should be between 0.5 and 5 inches. Please check your measurements.`, isError: true };
+                }
+            }
+            return { message: `Measurements seem valid. The result is ${y} ${mode.toLowerCase()}.`, isError: false };
+        }
+
+        document.getElementById('measurement-form-1').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const acrossShoulderInput = document.getElementById('across-shoulder').value;
+            const shoulderLengthInput = document.getElementById('shoulder-length').value;
+            const neckWidthInput = document.getElementById('neck-width').value;
+
+            const result = checkFormula1(acrossShoulderInput, shoulderLengthInput, neckWidthInput);
+
+            const resultElement = document.getElementById('result-1');
+            if (result.isError) {
+                resultElement.innerHTML = result.message;
+                resultElement.classList.add('error');
+            } else {
+                resultElement.innerHTML = result.message;
+                resultElement.classList.remove('error');
+            }
+        });
+
+        document.getElementById('measurement-form-2').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const frontHPSInput = document.getElementById('front-hps').value;
+            const backHPSInput = document.getElementById('back-hps').value;
+            const sideSeamInput = document.getElementById('side-seam').value;
+            const armholeInput = document.getElementById('armhole').value;
+
+            const result = checkFormula2(frontHPSInput, backHPSInput, sideSeamInput, armholeInput);
+
+            const resultElement = document.getElementById('result-2');
+            if (result.isError) {
+                resultElement.innerHTML = result.message;
+                resultElement.classList.add('error');
+            } else {
+                resultElement.innerHTML = result.message;
+                resultElement.classList.remove('error');
+            }
+        });
+
+        document.getElementById('toggle-mode').addEventListener('click', function() {
+            if (mode === 'CM') {
+                mode = 'INCH';
+                document.getElementById('mode-indicator').innerText = 'Current Mode: INCH (fractions)';
+                document.getElementById('toggle-mode').innerText = 'Switch to CM';
+            } else {
+                mode = 'CM';
+                document.getElementById('mode-indicator').innerText = 'Current Mode: CM';
+                document.getElementById('toggle-mode').innerText = 'Switch to INCH (fractions)';
+            }
+        });
+    </script>
+</body>
+</html>
