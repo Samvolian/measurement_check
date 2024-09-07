@@ -190,7 +190,7 @@
                 return { message: "Error: Invalid input. Please enter valid measurements.", isError: true };
             }
 
-            const x = ((neckWidth + (shoulderLength * 2) - acrossShoulder).toFixed(2);
+            const x = ((neckWidth + (shoulderLength * 2)) - acrossShoulder).toFixed(2);
             const numX = parseFloat(x);
 
             if (mode === 'CM') {
