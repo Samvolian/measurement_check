@@ -195,15 +195,15 @@
 
             if (mode === 'CM') {
                 if (numX < 0.3) {
-                    return { message: `Error: The result is ${x} cm, the result should be between 0.3 and 6 cm. Please check your measurements.`, isError: true };
-                } else if (numX > 6) {
-                    return { message: `Error: The result is ${x} cm, the result should be between 0.3 and 6 cm. Please check your measurements.`, isError: true };
+                    return { message: `Error: The result is ${x} cm, which should be between 0.3 and 7 cm. Please check your measurements.`, isError: true };
+                } else if (numX > 7) {
+                    return { message: `Error: The result is ${x} cm, which should be between 0.3 and 7 cm. Please check your measurements.`, isError: true };
                 }
             } else {
                 if (numX < 0.125) {
-                    return { message: `Error: The result is ${x} inches, the result should be between 0.125 (1/8) and 2.5 inches. Please check your measurements.`, isError: true };
-                } else if (numX > 2.5) {
-                    return { message: `Error: The result is ${x} inches, the result should be between 0.125 (1/8) and 2.5 inches. Please check your measurements.`, isError: true };
+                    return { message: `Error: The result is ${x} inches, which should be between 0.125 (1/8) and 2.75 inches. Please check your measurements.`, isError: true };
+                } else if (numX > 2.75) {
+                    return { message: `Error: The result is ${x} inches, which should be between 0.125 (1/8) and 2.75 inches. Please check your measurements.`, isError: true };
                 }
             }
             return { message: `Measurements seem valid. The result is ${x} ${mode.toLowerCase()}.`, isError: false };
@@ -224,15 +224,15 @@
 
             if (mode === 'CM') {
                 if (numY < 1.2) {
-                    return { message: `Error: The result is ${y} cm, the result should be between 1.2 cm and 12 cm. Please check your measurements.`, isError: true };
-                } else if (numY > 12) {
-                    return { message: `Error: The result is ${y} cm, the result should be between 1.2 cm and 12 cm. Please check your measurements.`, isError: true };
+                    return { message: `Error: The result is ${y} cm, which should be between 1.2 cm and 12.5 cm. Please check your measurements.`, isError: true };
+                } else if (numY > 12.5) {
+                    return { message: `Error: The result is ${y} cm, which should be between 1.2 cm and 12.5 cm. Please check your measurements.`, isError: true };
                 }
             } else {
                 if (numY < 0.5) {
-                    return { message: `Error: The result is ${y} inches, the result should be between 0.5 and 5 inches. Please check your measurements.`, isError: true };
+                    return { message: `Error: The result is ${y} inches, which should be between 0.5 and 5 inches. Please check your measurements.`, isError: true };
                 } else if (numY > 5) {
-                    return { message: `Error: The result is ${y} inches, the result should be between 0.5 and 5 inches. Please check your measurements.`, isError: true };
+                    return { message: `Error: The result is ${y} inches, which should be between 0.5 and 5 inches. Please check your measurements.`, isError: true };
                 }
             }
             return { message: `Measurements seem valid. The result is ${y} ${mode.toLowerCase()}.`, isError: false };
