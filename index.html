@@ -12,14 +12,19 @@
         }
         .content {
             flex: 1; /* Takes up available space on the left */
+            display: flex;
+            flex-direction: column;
         }
         .image-container {
             flex: 0 0 300px; /* Fixed width for the image container */
             margin-left: 20px; /* Space between content and image */
+            display: flex;
+            align-items: center; /* Center image vertically */
         }
         .image-container img {
             max-width: 100%;
-            height: auto; /* Keep image proportions */
+            height: 100%; /* Ensure image height matches container height */
+            object-fit: cover; /* Cover the container, maintaining aspect ratio */ 
         }
         h1, h2 {
             color: #333;
