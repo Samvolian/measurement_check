@@ -55,6 +55,7 @@
         .mode-button {
             margin-top: 10px;
             padding: 10px;
+            width: 250px;
             background-color: #007BFF; /* Blue color */
             color: white;
             border: none;
@@ -73,10 +74,10 @@
             margin: 10px 0;
         }
         .mode-indicator.cm {
-            background-color: #28a745; /* Green for CM mode */
+            background-color: #ff8b00; /* Green for CM mode */
         }
         .mode-indicator.inch {
-            background-color: #dc3545; /* Red for INCH mode */
+            background-color: #8b00ff; /* Red for INCH mode */
         }
     </style>
 </head>
@@ -119,7 +120,7 @@
             <label for="side-seam">Side Seam:</label>
             <input type="text" id="side-seam" required><br>
 
-            <label for="armhole">1/2 Armhole:</label>
+            <label for="armhole">1/2 Armhole (Straight):</label>
             <input type="text" id="armhole" required><br>
 
             <button type="submit">Check Measurements for Formula 2</button>
@@ -263,7 +264,7 @@
         // Toggle between CM and INCH
         document.getElementById('toggle-mode').addEventListener('click', function() {
             mode = (mode === 'CM') ? 'INCH' : 'CM';
-            this.innerText = `Switch to ${mode === 'CM' ? 'INCH (fractions)' : 'CM'}`;
+            this.innerText = `Switch to ${mode === 'CM' ? 'INCH' : 'CM'}`;
             
             // Update mode indicator style and text
             const modeIndicator = document.getElementById('mode-indicator');
