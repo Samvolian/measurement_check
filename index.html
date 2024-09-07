@@ -9,20 +9,19 @@
             font-family: Arial, sans-serif;
             margin: 10px;
             display: flex; /* Create a flexible two-column layout */
+            align-items: stretch; /* Ensure that both columns stretch to the same height */
         }
         .content {
             flex: 1; /* Takes up available space on the left */
-            display: flex;
-            flex-direction: column;
         }
         .image-container {
             flex: 0 0 300px; /* Fixed width for the image container */
             margin-left: 20px; /* Space between content and image */
             display: flex;
-            align-items: center; /* Center image vertically */
+            align-items: stretch; /* Center image vertically */
         }
         .image-container img {
-            max-width: 100%;
+            width: 100%;
             height: 100%; /* Ensure image height matches container height */
             object-fit: cover; /* Cover the container, maintaining aspect ratio */ 
         }
